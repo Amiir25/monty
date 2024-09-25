@@ -17,6 +17,8 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
+stack_t *head = NULL;
+
 /**
  * struct instruction_s - opcode and its function
  * @opcode: the opcode
@@ -30,5 +32,10 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+void read_file(File *);
+void push(int, char *);
+void pall();
+int is_number(char *);
 
 #endif /* MONTY_H */
