@@ -103,7 +103,7 @@ void pchar(stack_t **head, int line_number)
 	}
 
 	asci = (*head)->n;
-	if (asci < 65 || asci > 126)
+	if (asci < 33 || asci > 126)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
 		exit(EXIT_FAILURE);
