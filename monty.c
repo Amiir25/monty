@@ -28,7 +28,6 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 
-	read_file(file);
 	fclose(file);
 	return (0);
 }
@@ -71,7 +70,7 @@ void read_file(FILE *file)
 
 		else	/* Unkown opcode error */
 		{
-			fprintf(stderr, "L%d Unkown instruction %s", line_number, opcode);
+			fprintf(stderr, "L%d Unkown instruction %s\n", line_number, opcode);
 			exit(EXIT_FAILURE);
 		}
 	}
