@@ -2,7 +2,7 @@
 #define MONTY_H
 
 /**
- * struct stack_s = doubly linked list representation of a stack (or queue)
+ * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
  * @prev: points to the previous element of the stack (or queue)
  * @next: points to the next element of the stack (or queue)
@@ -16,8 +16,6 @@ typedef struct stack_s
 	struct stack_s *prev;
 	struct stack_s *next;
 } stack_t;
-
-stack_t *head = NULL;
 
 /**
  * struct instruction_s - opcode and its function
@@ -33,9 +31,9 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void read_file(File *);
+void read_file(FILE *);
 void push(int, char *);
-void pall();
+void pall(void);
 int is_number(char *);
 
 #endif /* MONTY_H */
