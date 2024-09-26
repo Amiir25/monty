@@ -47,10 +47,12 @@ void read_file(FILE *file)
 	char *arg;
 	size_t len;
 	int line_number;
+	stack_t *head;
 
+	head = NULL;
 	line = NULL;
 	len = 0;
-	line_number = 0;		/* Track the line number for error message */
+	line_number = 0;	/* Track the line number for error message */
 
 	while (getline(&line, &len, file) != -1)	/* Read a line from the file */
 	{
@@ -62,10 +64,10 @@ void read_file(FILE *file)
 		if (strcmp(opcode, "push"))
 		{
 			arg = strtok(NULL, " \n\t\r");	/* Extract the argument of push */
-			push(line_number, arg);
+			push(&head, line_number, arg);
 		}
 		else if (strcmp(opcode, "pall"))
-			pall();
+			pall(&head);
 
 		else	/* Unkown opcode error */
 		{
