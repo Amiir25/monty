@@ -59,6 +59,6 @@ void mul(stack_t **, int);
 void mod(stack_t **, int);
 void pchar(stack_t **, int);
 void pstr(stack_t **, int);
-void rot1(stack_t **);
+void rot1(stack_t **, int);
 
 #endif /* MONTY_H */
