@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "monty.h"
 
 /**
@@ -11,7 +8,7 @@
  * Return: Always success
  */
 
-int main(int ac, char **av)
+int main(int ac, char *av[])
 {
 	FILE *file;
 
@@ -28,6 +25,7 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 
+	read_file(file);
 	fclose(file);
 	return (0);
 }
@@ -41,12 +39,12 @@ int main(int ac, char **av)
 
 void read_file(FILE *file)
 {
-	char *line;
-	char *opcode;
+	stack_t *head;
 	char *arg;
+	char *opcode;
+	char *line;
 	size_t len;
 	int line_number;
-	stack_t *head;
 
 	head = NULL;
 	line = NULL;
@@ -60,19 +58,23 @@ void read_file(FILE *file)
 		if (opcode == NULL || opcode[0] == '#')	/* Check if it is empty or comment */
 			continue;
 
-		if (strcmp(opcode, "push"))
+		if (strcmp(opcode, "push") == 0)
 		{
-			arg = strtok(NULL, " \n\t\r");	/* Extract the argument of push */
+			arg = strtok(NULL, " \n\t\r");		/* Extract the arguement of push */
 			push(&head, line_number, arg);
 		}
-		else if (strcmp(opcode, "pall"))
+		else if (strcmp(opcode, "pall") == 0)
 			pall(&head);
+
+		else if (strcmp(opcode, "pint") == 0)
+			pint(&head, line_number);
 
 		else	/* Unkown opcode error */
 		{
 			fprintf(stderr, "L%d Unkown instruction %s\n", line_number, opcode);
 			exit(EXIT_FAILURE);
 		}
+
 	}
 
 	free(line);
