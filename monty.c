@@ -109,6 +109,8 @@ void get_opcode(stack_t **head, char *line, int line_number)
 		pchar(head, line_number);
 	else if (strcmp(opcode, "pstr") == 0)
 		pstr(head, line_number);
+	else if (strcmp(opcode, "rot1") == 0)
+		rot1(head);
 	else	/* Unkown opcode error */
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_number, opcode);

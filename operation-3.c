@@ -145,3 +145,30 @@ void pstr(stack_t **head, int line_number)
 
 	printf("\n");
 }
+
+/**
+ * rot1 - Prints the a string from its ascii equivalent
+ * @head: The address of the pointer to the first node
+ *
+ * Return: Nothing
+ */
+
+void rot1(stack_t **head)
+{
+	stack_t *ptr;
+	stack_t *last;
+
+	ptr = *head;
+	while (ptr)
+	{
+		last = ptr;
+		ptr = ptr->next;
+	}
+
+	last->next = *head;
+	(*head)->prev = last;
+	*head = (*head)->next;
+
+	(*head)->prev = NULL;
+	last->next->next = NULL;
+}
