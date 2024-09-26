@@ -9,21 +9,24 @@
 
 int is_number(char *str)
 {
-	if (str == NULL || *str == '\0')	/* Check for empty string */
+	if (str == NULL)
 		return (0);
 
-	if (*str == '-' || *str == '+')	/* Handle - and + signd */
+	if (*str == '-' || *str == '+')
 		str++;
+
+	if (*str == '\0')
+		return (0);
 
 	while (*str)
 	{
-		if (!isdigit(*str))		/* Check if each character is a digit */
+		if (!isdigit(*str))
 			return (0);
 
 		str++;
 	}
 
-	return (1);		/* Return true if all characters are digits */
+	return (1);
 }
 
 /**
@@ -69,6 +72,9 @@ void push(stack_t **head, int line_number, char *arg)
 void pall(stack_t **head)
 {
 	stack_t *ptr;
+
+	if (*head == NULL)
+		return;
 
 	ptr = *head;
 	while (ptr != NULL)
