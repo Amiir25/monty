@@ -53,7 +53,8 @@ void read_file(FILE *file)
 	while (getline(&line, &len, file) != -1)	/* Read a line from the file */
 	{
 		line_number++;
-		get_opcode(&head, line, line_number);
+		check_opcode1(&head, line, line_number);
+		check_opcode2(&head, line, line_number);
 	}
 
 	free(line);
@@ -66,7 +67,7 @@ void read_file(FILE *file)
 }
 
 /**
- * get_opcode - Checks for valid opcode
+ * check_opcode1 - Checks for valid opcode
  * @head: The address of the pointer to the first node
  * @line: The token returned by getline function
  * @line_number: The line number in the file
@@ -74,7 +75,7 @@ void read_file(FILE *file)
  * Return: Nothing
  */
 
-void get_opcode(stack_t **head, char *line, int line_number)
+void check_opcode1(stack_t **head, char *line, int line_number)
 {
 	char *opcode;
 	char *arg;
@@ -82,38 +83,74 @@ void get_opcode(stack_t **head, char *line, int line_number)
 	opcode = strtok(line, " \n\t\r");		/* Extract the first word */
 	if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
 		return;
+
 	if (strcmp(opcode, "push") == 0)
 	{
 		arg = strtok(NULL, " \n\t\r");		/* Extract the arguement of push */
 		push(head, line_number, arg);
 	}
+
 	else if (strcmp(opcode, "pall") == 0)
 		pall(head);
+
 	else if (strcmp(opcode, "pint") == 0)
 		pint(head, line_number);
+
 	else if (strcmp(opcode, "pop") == 0)
 		pop(head, line_number);
+
 	else if (strcmp(opcode, "swap") == 0)
 		swap(head, line_number);
+
 	else if (strcmp(opcode, "add") == 0)
 		add(head, line_number);
+
 	else if (strcmp(opcode, "sub") == 0)
 		sub(head, line_number);
+
 	else if (strcmp(opcode, "div") == 0)
 		_div(head, line_number);
+
 	else if (strcmp(opcode, "mul") == 0)
 		mul(head, line_number);
+
 	else if (strcmp(opcode, "mod") == 0)
 		mod(head, line_number);
+}
+
+/**
+ * check_opcode2 - Checks for valid opcode
+ * @head: The address of the pointer to the first node
+ * @line: The token returned by getline function
+ * @line_number: The line number in the file
+ *
+ * Return: Nothing
+ */
+
+void check_opcode2(stack_t **head, char *line, int line_number)
+{
+	char *opcode;
+
+	opcode = strtok(line, " \n\t\r");		/* Extract the first word */
+	if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
+		return;
+
 	else if (strcmp(opcode, "pchar") == 0)
 		pchar(head, line_number);
+
 	else if (strcmp(opcode, "pstr") == 0)
 		pstr(head, line_number);
+
 	else if (strcmp(opcode, "rot1") == 0)
-		rot1(head, line_number);
+		rot1(head);
+
+	else if (strcmp(opcode, "rotr") == 0)
+		rotr(head);
+
 	else	/* Unkown opcode error */
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_number, opcode);
 		exit(EXIT_FAILURE);
 	}
+
 }

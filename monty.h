@@ -38,7 +38,8 @@ typedef struct instruction_s
 
 /* Function of monty.c */
 void read_file(FILE *);
-void get_opcode(stack_t **, char *, int);
+void check_opcode1(stack_t **, char *, int);
+void check_opcode2(stack_t **, char *, int);
 
 /* Functions of operation-1.c */
 void push(stack_t **, int, char *);
@@ -59,6 +60,9 @@ void mul(stack_t **, int);
 void mod(stack_t **, int);
 void pchar(stack_t **, int);
 void pstr(stack_t **, int);
-void rot1(stack_t **, int);
+void rot1(stack_t **);
+
+/* Functions of operation_4.c */
+void rotr(stack_t **);
 
 #endif /* MONTY_H */

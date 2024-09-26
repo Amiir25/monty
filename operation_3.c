@@ -153,16 +153,10 @@ void pstr(stack_t **head, int line_number)
  * Return: Nothing
  */
 
-void rot1(stack_t **head, int line_number)
+void rot1(stack_t **head)
 {
 	stack_t *ptr;
 	stack_t *last;
-
-	if (*head == NULL)
-	{
-		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
-	}
 
 	ptr = *head;
 	while (ptr)
