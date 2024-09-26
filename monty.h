@@ -37,7 +37,7 @@ typedef struct instruction_s
 } instruction_t;
 
 void read_file(FILE *);
-void caller(char *, int);
+void get_opcode(stack_t **, char *, int);
 void push(stack_t **, int, char *);
 void pall(stack_t **);
 void pint(stack_t **, int);
