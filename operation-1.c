@@ -85,9 +85,6 @@ void pall(stack_t **head)
 {
 	stack_t *ptr;
 
-	if (*head == NULL)
-		return;
-
 	ptr = *head;
 	while (ptr != NULL)
 	{
