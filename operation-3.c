@@ -112,3 +112,36 @@ void pchar(stack_t **head, int line_number)
 	to_char = (char)asci;
 	printf("%c\n", to_char);
 }
+
+/**
+ * pstr - Prints the a string from its ascii equivalent
+ * @head: The address of the pointer to the first node
+ * @line_number: The line number in the file
+ *
+ * Return: Nothing
+ */
+
+void pstr(stack_t **head, int line_number)
+{
+	stack_t *ptr;
+	char to_char;
+
+	if (*head == NULL)
+	{
+		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	ptr = *head;
+	while (ptr)
+	{
+		if (ptr->n < 33 || ptr->n > 126)
+			break;
+
+		to_char = (char)ptr->n;
+		ptr = ptr->next;
+		printf("%c", to_char);
+	}
+
+	printf("\n");
+}
