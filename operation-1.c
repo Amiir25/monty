@@ -1,6 +1,18 @@
 #include "monty.h"
 
 /**
+ * is_empty - Checks if the stack is empty
+ * @head: The address of the pointer to the first node
+ *
+ * Return: 1 if empty, 0 otherwise
+ */
+
+int is_empty(stack_t **head)
+{
+	return (*head == NULL);
+}
+
+/**
  * is_number - Checks the argument of push
  * @str: The argument in string format
  *
@@ -94,7 +106,7 @@ void pall(stack_t **head)
 
 void pint(stack_t **head, int line_number)
 {
-	if (*head == NULL)
+	if (is_empty(head))
 	{
 		fprintf(stderr, "L%d: can't print, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
