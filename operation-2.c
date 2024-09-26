@@ -161,7 +161,6 @@ void sub(stack_t **head, int line_number)
 	free(node1);
 }
 
-
 /**
  * _div - Divides the second top value by the top value of the stack
  * @head: The address of the pointer to the first node
