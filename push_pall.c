@@ -1,7 +1,30 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include "monty.h"
+
+/**
+ * is_number - Checks the argument of push
+ * @str: The argument in string format
+ *
+ * Return: 1 if all characters are digit, 0 otherwise
+ */
+
+int is_number(char *str)
+{
+	if (str == NULL || *str == '\0')	/* Check for empty string */
+		return (0);
+
+	if (*str == '-' || *str == '+')	/* Handle - and + signd */
+		str++;
+
+	while (*str)
+	{
+		if (!isdigit(*str))		/* Check if each character is a digit */
+			return (0);
+
+		str++;
+	}
+
+	return (1);		/* Return true if all characters are digits */
+}
 
 /**
  * push - Inserts a new node to the stack
@@ -54,27 +77,19 @@ void pall(stack_t **head)
 }
 
 /**
- * is_number - Checks the argument of push
- * @str: The argument in string format
+ * pint - Prints the value at the top of the stack
+ * @head: The address of the pointer to the first node
+ * @line_number: The line number in the file
  *
- * Return: 1 if all characters are digit, 0 otherwise
+ * Return: Nothing
  */
 
-int is_number(char *str)
+void pint(stack_t **head, int line_number)
 {
-	if (str == NULL || *str == '\0')	/* Check for empty string */
-		return (0);
-
-	if (*str == '-' || *str == '+')	/* Handle - and + signd */
-		str++;
-
-	while (*str)
+	if (*head == NULL)
 	{
-		if (!isdigit(*str))		/* Check if each character is a digit */
-			return (0);
-
-		str++;
+		fprintf(stderr, "L%d: can't print, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
 	}
-
-	return (1);		/* Return true if all characters are digits */
+	printf("%d\n", (*head)->n);
 }
