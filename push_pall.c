@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "monty.h"
+
+stack_t *head = NULL;
 
 /**
  * push - Inserts a new node to the stack
@@ -12,11 +15,11 @@
 
 void push(int line_number, char *arg)
 {
-	stack_t new_node;
+	stack_t *new_node;
 
-	if (!is_number())	/* Check if the arguement is a valid integer */
+	if (!is_number(arg))	/* Check if the arguement is a valid integer */
 	{
-		fprintf(stderr, "L%d: Usage: push integer\n );
+		fprintf(stderr, "L%d: Usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
@@ -59,7 +62,7 @@ void pall()
 
 int is_number(char *str)
 {
-	if (str == NULL || str == '\0')		/* Check for empty string */
+	if (str == NULL || *str == '\0')	/* Check for empty string */
 		return (0);
 
 	if (*str == '-' || *str == '+')		/* Handle - and + signd */
