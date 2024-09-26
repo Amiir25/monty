@@ -5,15 +5,15 @@
 
 /**
  * push - Inserts a new node to the stack
+ * @head: The address of the pointer to the first node
  * @line_number: The line number of an error in the file if occur
  * @arg: The argument of push
  *
  * Return: Nothing
  */
 
-void push(int line_number, char *arg)
+void push(stack_t **head, int line_number, char *arg)
 {
-	stack_t *head;
 	stack_t *new_node;
 
 	if (!is_number(arg))	/* Check if the arguement is a valid integer */
@@ -22,7 +22,6 @@ void push(int line_number, char *arg)
 		exit(EXIT_FAILURE);
 	}
 
-	head = NULL;
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
@@ -31,21 +30,22 @@ void push(int line_number, char *arg)
 	}
 	new_node->n = atoi(arg);
 	new_node->prev = NULL;
-	new_node->next = head;
-	head = new_node;
+	new_node->next = *head;
+	*head = new_node;
 }
 
 /**
  * pall - Prints all the elements in the stack
+ * @head: The address of the pointer to the first node
  *
  * Return: Nothing
  */
 
-void pall(void)
+void pall(stack_t **head)
 {
 	stack_t *ptr;
 
-	ptr = head;
+	ptr = *head;
 	while (ptr != NULL)
 	{
 		printf("%d\n", ptr->n);
