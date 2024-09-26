@@ -116,8 +116,7 @@ void add(stack_t **head, int line_number)
 	}
 
 	node1 = *head;
-	if (node1->next != NULL)
-		node2 = node1->next;
+	node2 = node1->next;
 	node2->n = node1->n + node2->n;
 	node2->prev = NULL;
 	*head = node2;
@@ -157,6 +156,51 @@ void sub(stack_t **head, int line_number)
 	node1 = *head;
 	node2 = node1->next;
 	node2->n = node2->n - node1->n;
+	node2->prev = NULL;
+	*head = node2;
+	free(node1);
+}
+
+
+/**
+ * _div - Divides the second top value by the top value of the stack
+ * @head: The address of the pointer to the first node
+ * @line_number: The line number in the file
+ *
+ * Return: Nothing
+ */
+
+void _div(stack_t **head, int line_number)
+{
+	stack_t *ptr;
+	stack_t *node1;
+	stack_t *node2;
+	int count;
+
+	ptr = *head;
+	count = 0;
+
+	while (ptr != NULL)
+	{
+		count++;
+		ptr = ptr->next;
+	}
+
+	if (count < 2)
+	{
+		fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	node1 = *head;
+	node2 = node1->next;
+	if (node2->n == 0)
+	{
+		fprintf(stderr, "L%d: division by zero\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	node2->n = node2->n / node1->n;
 	node2->prev = NULL;
 	*head = node2;
 	free(node1);
