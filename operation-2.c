@@ -120,3 +120,40 @@ void add(stack_t **head, int line_number)
 	*head = node2;
 	free(node1);
 }
+
+/**
+ * sub - Subtracts the value of the first top node from the second one
+ * @head: The address of the pointer to the first node
+ * @line_number: The line number in the file
+ *
+ * Return: Nothing
+ */
+
+void sub(stack_t **head, int line_number)
+{
+	stack_t *ptr;
+	stack_t *node1;
+	stack_t *node2;
+	int count;
+
+	ptr = node1 = node2 = *head;
+	count = 1;
+
+	while (ptr != NULL)
+	{
+		count++;
+		ptr = ptr->next;
+	}
+
+	if (count < 2)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	node2 = node2->next;
+	node2->n = node2->n - node1->n;
+	node2->prev = NULL;
+	*head = node2;
+	free(node1);
+}
