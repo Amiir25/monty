@@ -36,12 +36,18 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/* Function of monty.c */
 void read_file(FILE *);
 void get_opcode(stack_t **, char *, int);
+
+/* Functions of operation-1.c */
 void push(stack_t **, int, char *);
 void pall(stack_t **);
 void pint(stack_t **, int);
 int is_number(char *);
 int is_empty(stack_t **);
+
+/* Functions of operation-2.c */
+void pop(stack_t **, int);
 
 #endif /* MONTY_H */
