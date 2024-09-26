@@ -54,4 +54,7 @@ void add(stack_t **, int);
 void sub(stack_t **, int);
 void _div(stack_t **, int);
 
+/* Functions of operation-3.c */
+void mul(stack_t **, int);
+
 #endif /* MONTY_H */
