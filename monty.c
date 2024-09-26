@@ -93,6 +93,8 @@ void get_opcode(stack_t **head, char *line, int line_number)
 		pint(head, line_number);
 	else if (strcmp(opcode, "pop") == 0)
 		pop(head, line_number);
+	else if (strcmp(opcode, "swap") == 0)
+		swap(head, line_number);
 	else	/* Unkown opcode error */
 	{
 		fprintf(stderr, "L%d: unkown instruction %s\n", line_number, opcode);
