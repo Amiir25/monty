@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "monty.h"
 
 /**
@@ -10,7 +11,7 @@
  * Return: Always success
  */
 
-int main(int ac, char **av[])
+int main(int ac, char **av)
 {
 	FILE *file;
 
@@ -29,7 +30,7 @@ int main(int ac, char **av[])
 
 	read_file(file);
 	fclose(file);
-
+	return (0);
 }
 
 /**
@@ -49,13 +50,13 @@ void read_file(FILE *file)
 
 	line = NULL;
 	len = 0;
-	line_number = 0		/* Track the line number for error message */
+	line_number = 0;		/* Track the line number for error message */
 
-	if (getline(&line, &len, file) != -1)	/* getline() function to read a line from the file */
+	while (getline(&line, &len, file) != -1)	/* getline() function to read a line from the file */
 	{
 		line_number++;
 		opcode = strtok(line, " \n\t\r");	/* strtok() function to extract the first word */
-		if (opcode == NULL || opcode == '#')	/* Check if it is empty or comment */
+		if (opcode == NULL || opcode[0] == '#')	/* Check if it is empty or comment */
 			continue;
 
 		if (strcmp(opcode, "push"))
