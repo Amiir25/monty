@@ -21,7 +21,7 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 
-	file = fopen(av[1], "r"); 	/* Open the file to read */
+	file = fopen(av[1], "r");	/* Open the file to read */
 	if (file == NULL)
 	{
 		printf("Error: can't open file %s\n", av[1]);
@@ -52,16 +52,16 @@ void read_file(FILE *file)
 	len = 0;
 	line_number = 0;		/* Track the line number for error message */
 
-	while (getline(&line, &len, file) != -1)	/* getline() function to read a line from the file */
+	while (getline(&line, &len, file) != -1)	/* Read a line from the file */
 	{
 		line_number++;
-		opcode = strtok(line, " \n\t\r");	/* strtok() function to extract the first word */
+		opcode = strtok(line, " \n\t\r");	/* Extract the first word */
 		if (opcode == NULL || opcode[0] == '#')	/* Check if it is empty or comment */
 			continue;
 
 		if (strcmp(opcode, "push"))
 		{
-			arg = strtok(NULL, " \n\t\r");	/* Call strtok() again to extract the argument */
+			arg = strtok(NULL, " \n\t\r");	/* Extract the argument of push */
 			push(line_number, arg);
 		}
 		else if (strcmp(opcode, "pall"))
