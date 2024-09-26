@@ -32,8 +32,8 @@ typedef struct instruction_s
 } instruction_t;
 
 void read_file(FILE *);
-void push(int, char *);
-void pall(void);
+void push(stack_t **, int, char *);
+void pall(stack_t **);
 int is_number(char *);
 
 #endif /* MONTY_H */
