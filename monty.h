@@ -42,5 +42,6 @@ void push(stack_t **, int, char *);
 void pall(stack_t **);
 void pint(stack_t **, int);
 int is_number(char *);
+int is_empty(stack_t **);
 
 #endif /* MONTY_H */
