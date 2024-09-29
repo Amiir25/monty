@@ -52,16 +52,16 @@ void read_file(FILE *file)
 	len = 0;
 	line_number = 0;	/* Track the line number for error message */
 
-	while (getline(&line, &len, file) != -1)	/* Read a line from the file */
+	while (getline(&line, &len, file) != -1)
 	{
 
 		line_number++;
 
-		opcode = strtok(line, " \n\t\r");		/* Extract the first word */
-		if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
+		opcode = strtok(line, " \n\t\r");
+		if (opcode == NULL || opcode[0] == '#')
 			continue;
 
-		arg = strtok(NULL, " \n\t\r");		
+		arg = strtok(NULL, " \n\t\r");
 		process_opcode(&stack, opcode, line_number, arg);
 	}
 
@@ -84,7 +84,8 @@ void read_file(FILE *file)
  * Return: Nothing
  */
 
-void process_opcode(stack_t **stack, char *opcode, unsigned int line_number, char *arg)
+void process_opcode(stack_t **stack, char *opcode,
+		    unsigned int line_number, char *arg)
 {
 	int i;
 
