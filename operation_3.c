@@ -39,7 +39,7 @@ void mul(stack_t **head, int line_number)
 }
 
 /**
- * mod - Computes the rest of the division the second top value by
+ * mod - Computes the rest of the division of the second top value by
  * the top value of the stack
  * @head: The address of the pointer to the first node
  * @line_number: The line number in the file
