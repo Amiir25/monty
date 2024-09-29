@@ -149,7 +149,7 @@ void check_opcode2(stack_t **head, char *line, int line_number)
 
 	else	/* Unkown opcode error */
 	{
-		fprintf(stderr, "L%d: unkown instruction %s\n", line_number, opcode);
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 		exit(EXIT_FAILURE);
 	}
 
