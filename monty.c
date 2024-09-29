@@ -39,14 +39,15 @@ int main(int ac, char *av[])
 
 void read_file(FILE *file)
 {
-	stack_t *head;
+	stack_t *stack;
 	stack_t *ptr;
 	char *line;
 	size_t len;
 	char *opcode;
-	int line_number;
+	char *arg;
+	unsigned int line_number;
 
-	head = NULL;
+	stack = NULL;
 	line = NULL;
 	len = 0;
 	line_number = 0;	/* Track the line number for error message */
@@ -56,147 +57,58 @@ void read_file(FILE *file)
 
 		line_number++;
 
-		check_opcode1(&head, line, line_number);
-		check_opcode2(&head, line, line_number);
-		opcode = check_opcode3(&head, line, line_number);
+		opcode = strtok(line, " \n\t\r");		/* Extract the first word */
+		if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
+			continue;
 
-		if (opcode != NULL)
-		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-			exit(EXIT_FAILURE);
-		}
+		arg = strtok(NULL, " \n\t\r");		
+		process_opcode(&stack, opcode, line_number, arg);
 	}
 
 	free(line);
-	while (head != NULL)
+	while (stack != NULL)
 	{
-		ptr = head;
-		head = head->next;
+		ptr = stack;
+		stack = stack->next;
 		free(ptr);
 	}
 }
 
 /**
- * check_opcode1 - Checks for valid opcode
- * @head: The address of the pointer to the first node
- * @line: The token returned by getline function
+ * process_opcode - Checks for valid opcode
+ * @stack: The address of the pointer to the first node
+ * @opcode: The opcode read by strtok() function
  * @line_number: The line number in the file
+ * @arg: Thea argument of the opcode
  *
- * Return: 1 for success, 0 for fail
+ * Return: Nothing
  */
 
-void check_opcode1(stack_t **head, char *line, int line_number)
+void process_opcode(stack_t **stack, char *opcode, unsigned int line_number, char *arg)
 {
-	char *opcode;
-	char *arg;
+	int i;
 
-	opcode = strtok(line, " \n\t\r");		/* Extract the first word */
-	if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
-		return;
+	instruction_t opcode_list[] = {
+		{"push", push}, {"pall", pall}, {"pint", pint}, {NULL, NULL}
+	};
+
 	if (strcmp(opcode, "push") == 0)
 	{
-		printf("Calling push\n");
-		arg = strtok(NULL, " \n\t\r");
-		push(head, line_number, arg);
-	}
-	else if (strcmp(opcode, "pall") == 0)
-	{
-		pall(head);
-	}
-	else if (strcmp(opcode, "pint") == 0)
-	{
-		printf("Calling pint\n");
-		pint(head, line_number);
-	}
-	else if (strcmp(opcode, "pop") == 0)
-	{
-		pop(head, line_number);
-	}
-	else if (strcmp(opcode, "swap") == 0)
-	{
-		swap(head, line_number);
-	}
-
-}
-
-/**
- * check_opcode2 - Checks for valid opcode
- * @head: The address of the pointer to the first node
- * @line: The token returned by getline function
- * @line_number: The line number in the file
- *
- * Return: 1 for success, 0 for fail
- */
-
-void check_opcode2(stack_t **head, char *line, int line_number)
-{
-	char *opcode;
-
-	opcode = strtok(line, " \n\t\r");		/* Extract the first word */
-	if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
+		push(stack, line_number, arg);
 		return;
-	else if (strcmp(opcode, "add") == 0)
-	{
-		add(head, line_number);
-	}
-	else if (strcmp(opcode, "sub") == 0)
-	{
-		sub(head, line_number);
-
-	}
-	else if (strcmp(opcode, "div") == 0)
-	{
-		_div(head, line_number);
-	}
-	else if (strcmp(opcode, "mul") == 0)
-	{
-		mul(head, line_number);
-	}
-	else if (strcmp(opcode, "mod") == 0)
-	{
-		mod(head, line_number);
 	}
 
-}
 
-/**
- * check_opcode3 - Checks for valid opcode
- * @head: The address of the pointer to the first node
- * @line: The token returned by getline function
- * @line_number: The line number in the file
- *
- * Return: 1 for success, 0 for fail
- */
-
-char *check_opcode3(stack_t **head, char *line, int line_number)
-{
-	char *opcode;
-
-	opcode = strtok(line, " \n\t\r");		/* Extract the first word */
-	if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
-		return (NULL);
-
-	else if (strcmp(opcode, "pchar") == 0)
+	for (i = 0; opcode_list[i].opcode != NULL; i++)
 	{
-		pchar(head, line_number);
-		return (NULL);
+		if (strcmp(opcode, opcode_list[i].opcode) == 0)
+		{
+
+			opcode_list[i].f(stack, line_number);
+			return;
+		}
 	}
 
-	else if (strcmp(opcode, "pstr") == 0)
-	{
-		pstr(head, line_number);
-		return (NULL);
-	}
-	else if (strcmp(opcode, "rot1") == 0)
-	{
-		rot1(head);
-		return (NULL);
-	}
-	else if (strcmp(opcode, "rotr") == 0)
-	{
-		rotr(head);
-		return (NULL);
-	}
-
-	return (opcode);
+	fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+	exit(EXIT_FAILURE);
 }
