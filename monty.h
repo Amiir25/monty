@@ -40,13 +40,14 @@ typedef struct instruction_s
 void read_file(FILE *);
 void check_opcode1(stack_t **, char *, int);
 void check_opcode2(stack_t **, char *, int);
+void check_opcode3(stack_t **, char *, int);
 
 /* Functions of operation-1.c */
 void push(stack_t **, int, char *);
 void pall(stack_t **);
 void pint(stack_t **, int);
 int is_number(char *);
-int is_empty(stack_t **);
+void free_stack(stack_t **);
 
 /* Functions of operation-2.c */
 void pop(stack_t **, int);
