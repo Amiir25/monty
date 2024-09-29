@@ -1,15 +1,22 @@
 #include "monty.h"
 
 /**
- * is_empty - Checks if the stack is empty
+ * free_stack - Frees allocated memory
  * @head: The address of the pointer to the first node
  *
  * Return: 1 if empty, 0 otherwise
  */
 
-int is_empty(stack_t **head)
+void free_stack(stack_t **head)
 {
-	return (*head == NULL);
+	stack_t *ptr;
+
+	while (ptr != NULL)
+	{
+		ptr = *head;
+		*head = (*head)->next;
+		free(ptr);
+	}
 }
 
 /**
@@ -56,6 +63,7 @@ void push(stack_t **head, int line_number, char *arg)
 
 	if (arg == NULL || !is_number(arg))
 	{
+		free_stack(head);
 		fprintf(stderr, "L%d: Usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
@@ -103,7 +111,7 @@ void pall(stack_t **head)
 
 void pint(stack_t **head, int line_number)
 {
-	if (is_empty(head))
+	if (*head == NULL)
 	{
 		fprintf(stderr, "L%d: can't print, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
