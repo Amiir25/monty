@@ -54,7 +54,7 @@ void push(stack_t **head, int line_number, char *arg)
 {
 	stack_t *new_node;
 
-	if (!is_number(arg))	/* Check if the arguement is a valid integer */
+	if (arg == NULL || !is_number(arg))	/* Check if the arguement is a valid integer */
 	{
 		fprintf(stderr, "L%d: Usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
