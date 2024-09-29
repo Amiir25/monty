@@ -2,19 +2,19 @@
 
 /**
  * free_stack - Frees allocated memory
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  *
  * Return: 1 if empty, 0 otherwise
  */
 
-void free_stack(stack_t **head)
+void free_stack(stack_t **stack)
 {
 	stack_t *ptr;
 
 	while (ptr != NULL)
 	{
-		ptr = *head;
-		*head = (*head)->next;
+		ptr = *stack;
+		*stack = (*stack)->next;
 		free(ptr);
 	}
 }
@@ -50,20 +50,20 @@ int is_number(char *str)
 
 /**
  * push - Inserts a new node to the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number of an error in the file if occur
  * @arg: The argument of push
  *
  * Return: Nothing
  */
 
-void push(stack_t **head, int line_number, char *arg)
+void push(stack_t **stack, unsigned int line_number, char *arg)
 {
 	stack_t *new_node;
 
 	if (arg == NULL || !is_number(arg))
 	{
-		free_stack(head);
+		free_stack(stack);
 		fprintf(stderr, "L%d: Usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
@@ -76,24 +76,30 @@ void push(stack_t **head, int line_number, char *arg)
 	}
 	new_node->n = atoi(arg);
 	new_node->prev = NULL;
-	new_node->next = *head;
-	if (*head != NULL)
-		(*head)->prev = new_node;
-	*head = new_node;
+	new_node->next = *stack;
+	if (*stack != NULL)
+		(*stack)->prev = new_node;
+	*stack = new_node;
 }
 
 /**
  * pall - Prints all the elements in the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  *
  * Return: Nothing
  */
 
-void pall(stack_t **head)
+void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 
-	ptr = *head;
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: Usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	ptr = *stack;
 	while (ptr != NULL)
 	{
 		printf("%d\n", ptr->n);
@@ -103,18 +109,18 @@ void pall(stack_t **head)
 
 /**
  * pint - Prints the value at the top of the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void pint(stack_t **head, int line_number)
+void pint(stack_t **stack, unsigned int line_number)
 {
-	if (*head == NULL)
+	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	printf("%d\n", (*head)->n);
+	printf("%d\n", (*stack)->n);
 }
