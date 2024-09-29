@@ -40,7 +40,7 @@ typedef struct instruction_s
 void read_file(FILE *);
 void check_opcode1(stack_t **, char *, int);
 void check_opcode2(stack_t **, char *, int);
-void check_opcode3(stack_t **, char *, int);
+char *check_opcode3(stack_t **, char *, int);
 
 /* Functions of operation-1.c */
 void push(stack_t **, int, char *);
