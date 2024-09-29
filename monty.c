@@ -43,6 +43,7 @@ void read_file(FILE *file)
 	stack_t *ptr;
 	char *line;
 	size_t len;
+	char *opcode;
 	int line_number;
 
 	head = NULL;
@@ -52,10 +53,18 @@ void read_file(FILE *file)
 
 	while (getline(&line, &len, file) != -1)	/* Read a line from the file */
 	{
+
 		line_number++;
+
 		check_opcode1(&head, line, line_number);
 		check_opcode2(&head, line, line_number);
-		check_opcode3(&head, line, line_number);
+		opcode = check_opcode3(&head, line, line_number);
+
+		if (opcode != NULL)
+		{
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	free(line);
@@ -73,7 +82,7 @@ void read_file(FILE *file)
  * @line: The token returned by getline function
  * @line_number: The line number in the file
  *
- * Return: Nothing
+ * Return: 1 for success, 0 for fail
  */
 
 void check_opcode1(stack_t **head, char *line, int line_number)
@@ -86,30 +95,28 @@ void check_opcode1(stack_t **head, char *line, int line_number)
 		return;
 	if (strcmp(opcode, "push") == 0)
 	{
+		printf("Calling push\n");
 		arg = strtok(NULL, " \n\t\r");
 		push(head, line_number, arg);
-		return;
 	}
 	else if (strcmp(opcode, "pall") == 0)
 	{
 		pall(head);
-		return;
 	}
 	else if (strcmp(opcode, "pint") == 0)
 	{
+		printf("Calling pint\n");
 		pint(head, line_number);
-		return;
 	}
 	else if (strcmp(opcode, "pop") == 0)
 	{
 		pop(head, line_number);
-		return;
 	}
 	else if (strcmp(opcode, "swap") == 0)
 	{
 		swap(head, line_number);
-		return;
 	}
+
 }
 
 /**
@@ -118,7 +125,7 @@ void check_opcode1(stack_t **head, char *line, int line_number)
  * @line: The token returned by getline function
  * @line_number: The line number in the file
  *
- * Return: Nothing
+ * Return: 1 for success, 0 for fail
  */
 
 void check_opcode2(stack_t **head, char *line, int line_number)
@@ -131,28 +138,25 @@ void check_opcode2(stack_t **head, char *line, int line_number)
 	else if (strcmp(opcode, "add") == 0)
 	{
 		add(head, line_number);
-		return;
 	}
 	else if (strcmp(opcode, "sub") == 0)
 	{
 		sub(head, line_number);
-		return;
+
 	}
 	else if (strcmp(opcode, "div") == 0)
 	{
 		_div(head, line_number);
-		return;
 	}
 	else if (strcmp(opcode, "mul") == 0)
 	{
 		mul(head, line_number);
-		return;
 	}
 	else if (strcmp(opcode, "mod") == 0)
 	{
 		mod(head, line_number);
-		return;
 	}
+
 }
 
 /**
@@ -161,40 +165,38 @@ void check_opcode2(stack_t **head, char *line, int line_number)
  * @line: The token returned by getline function
  * @line_number: The line number in the file
  *
- * Return: Nothing
+ * Return: 1 for success, 0 for fail
  */
 
-void check_opcode3(stack_t **head, char *line, int line_number)
+char *check_opcode3(stack_t **head, char *line, int line_number)
 {
 	char *opcode;
 
 	opcode = strtok(line, " \n\t\r");		/* Extract the first word */
 	if (opcode == NULL || opcode[0] == '#')		/* Check if it is empty or comment */
-		return;
+		return (NULL);
+
 	else if (strcmp(opcode, "pchar") == 0)
 	{
 		pchar(head, line_number);
-		return;
+		return (NULL);
 	}
 
 	else if (strcmp(opcode, "pstr") == 0)
 	{
 		pstr(head, line_number);
-		return;
+		return (NULL);
 	}
 	else if (strcmp(opcode, "rot1") == 0)
 	{
 		rot1(head);
-		return;
+		return (NULL);
 	}
 	else if (strcmp(opcode, "rotr") == 0)
 	{
 		rotr(head);
-		return;
+		return (NULL);
 	}
-	else	/* Unkown opcode error */
-	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
-		exit(EXIT_FAILURE);
-	}
+
+	return (opcode);
 }
