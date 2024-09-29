@@ -38,14 +38,12 @@ typedef struct instruction_s
 
 /* Function of monty.c */
 void read_file(FILE *);
-void check_opcode1(stack_t **, char *, int);
-void check_opcode2(stack_t **, char *, int);
-char *check_opcode3(stack_t **, char *, int);
+void process_opcode(stack_t **, char *, unsigned int, char *);
 
 /* Functions of operation-1.c */
-void push(stack_t **, int, char *);
-void pall(stack_t **);
-void pint(stack_t **, int);
+void push(stack_t **, unsigned int, char *);
+void pall(stack_t **, unsigned int);
+void pint(stack_t **, unsigned int);
 int is_number(char *);
 void free_stack(stack_t **);
 
