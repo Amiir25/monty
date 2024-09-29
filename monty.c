@@ -55,6 +55,7 @@ void read_file(FILE *file)
 		line_number++;
 		check_opcode1(&head, line, line_number);
 		check_opcode2(&head, line, line_number);
+		check_opcode3(&head, line, line_number);
 	}
 
 	free(line);
