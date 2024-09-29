@@ -85,6 +85,7 @@ void push(stack_t **stack, unsigned int line_number, char *arg)
 /**
  * pall - Prints all the elements in the stack
  * @stack: The address of the pointer to the first node
+ * @line_number: The line number of an error in the file if occur
  *
  * Return: Nothing
  */
