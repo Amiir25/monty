@@ -5,6 +5,7 @@
  * rotr - Rotates the stack to the bottom
  * (The last element of the stack become the top element)
  * @stack: The address of the pointer to the first node
+ * @line_number: The line number in the file
  *
  * Return: Nothing
  */
