@@ -48,20 +48,20 @@ int is_number(char *);
 void free_stack(stack_t **);
 
 /* Functions of operation-2.c */
-void pop(stack_t **, int);
-void swap(stack_t **, int);
-void add(stack_t **, int);
-void sub(stack_t **, int);
-void _div(stack_t **, int);
+void pop(stack_t **, unsigned int);
+void swap(stack_t **, unsigned int);
+void add(stack_t **, unsigned int);
+void sub(stack_t **, unsigned int);
+void _div(stack_t **, unsigned int);
 
 /* Functions of operation-3.c */
-void mul(stack_t **, int);
-void mod(stack_t **, int);
-void pchar(stack_t **, int);
-void pstr(stack_t **, int);
-void rot1(stack_t **);
+void mul(stack_t **, unsigned int);
+void mod(stack_t **, unsigned int);
+void pchar(stack_t **, unsigned int);
+void pstr(stack_t **, unsigned int);
+void rot1(stack_t **, unsigned int);
 
 /* Functions of operation_4.c */
-void rotr(stack_t **);
+void rotr(stack_t **, unsigned int);
 
 #endif /* MONTY_H */

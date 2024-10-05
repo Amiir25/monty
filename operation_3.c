@@ -3,20 +3,20 @@
 
 /**
  * mul - Multiplies the second top value by the top value of the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void mul(stack_t **head, int line_number)
+void mul(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	stack_t *node1;
 	stack_t *node2;
 	int count;
 
-	ptr = *head;
+	ptr = *stack;
 	count = 0;
 	while (ptr != NULL)
 	{
@@ -30,31 +30,31 @@ void mul(stack_t **head, int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	node1 = *head;
+	node1 = *stack;
 	node2 = node1->next;
 	node2->n = node1->n * node2->n;
 	node2->prev = NULL;
-	*head = node2;
+	*stack = node2;
 	free(node1);
 }
 
 /**
  * mod - Computes the rest of the division of the second top value by
  * the top value of the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void mod(stack_t **head, int line_number)
+void mod(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	stack_t *node1;
 	stack_t *node2;
 	int count;
 
-	ptr = *head;
+	ptr = *stack;
 	count = 0;
 
 	while (ptr != NULL)
@@ -69,7 +69,7 @@ void mod(stack_t **head, int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	node1 = *head;
+	node1 = *stack;
 	node2 = node1->next;
 	if (node2->n == 0)
 	{
@@ -79,30 +79,30 @@ void mod(stack_t **head, int line_number)
 
 	node2->n = node2->n % node1->n;
 	node2->prev = NULL;
-	*head = node2;
+	*stack = node2;
 	free(node1);
 }
 
 /**
  * pchar - Prints the a character from its ascii equivalent
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void pchar(stack_t **head, int line_number)
+void pchar(stack_t **stack, unsigned int line_number)
 {
 	int asci;
 	char to_char;
 
-	if (*head == NULL)
+	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
-	asci = (*head)->n;
+	asci = (*stack)->n;
 	if (asci < 33 || asci > 126)
 	{
 		fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
@@ -115,24 +115,24 @@ void pchar(stack_t **head, int line_number)
 
 /**
  * pstr - Prints the a string from its ascii equivalent
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void pstr(stack_t **head, int line_number)
+void pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	char to_char;
 
-	if (*head == NULL)
+	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
-	ptr = *head;
+	ptr = *stack;
 	while (ptr)
 	{
 		if (ptr->n < 33 || ptr->n > 126)
@@ -148,27 +148,34 @@ void pstr(stack_t **head, int line_number)
 
 /**
  * rot1 - Prints the a string from its ascii equivalent
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
+ * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void rot1(stack_t **head)
+void rot1(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	stack_t *last;
 
-	ptr = *head;
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	ptr = *stack;
 	while (ptr)
 	{
 		last = ptr;
 		ptr = ptr->next;
 	}
 
-	last->next = *head;
-	(*head)->prev = last;
-	*head = (*head)->next;
+	last->next = *stack;
+	(*stack)->prev = last;
+	*stack = (*stack)->next;
 
-	(*head)->prev = NULL;
+	(*stack)->prev = NULL;
 	last->next->next = NULL;
 }

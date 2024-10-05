@@ -2,53 +2,53 @@
 
 /**
  * pop - Remove the top element of the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void pop(stack_t **head, int line_number)
+void pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 
-	if (*head == NULL)
+	if (*stack == NULL)
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
-	ptr = *head;
+	ptr = *stack;
 	if (ptr->next != NULL)
 	{
-		*head = ptr->next;
-		(*head)->prev = NULL;
+		*stack = ptr->next;
+		(*stack)->prev = NULL;
 		free(ptr);
 	}
 
 	else
 	{
-		*head = NULL;
+		*stack = NULL;
 		free(ptr);
 	}
 }
 
 /**
  * swap - Swaps the top two elements of the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void swap(stack_t **head, int line_number)
+void swap(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	stack_t *node1;
 	stack_t *node2;
 	int count;
 
-	ptr = *head;
+	ptr = *stack;
 	count = 0;
 
 	while (ptr != NULL)
@@ -63,7 +63,7 @@ void swap(stack_t **head, int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	node1 = *head;
+	node1 = *stack;
 	node2 = node1->next;
 	if (node2->next != NULL)
 	{
@@ -82,25 +82,25 @@ void swap(stack_t **head, int line_number)
 		node2->prev = NULL;
 	}
 
-	*head = node2;
+	*stack = node2;
 }
 
 /**
  * add - Adds the value of the first two nodes
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void add(stack_t **head, int line_number)
+void add(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	stack_t *node1;
 	stack_t *node2;
 	int count;
 
-	ptr = *head;
+	ptr = *stack;
 	count = 0;
 
 	while (ptr != NULL)
@@ -115,30 +115,30 @@ void add(stack_t **head, int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	node1 = *head;
+	node1 = *stack;
 	node2 = node1->next;
 	node2->n = node1->n + node2->n;
 	node2->prev = NULL;
-	*head = node2;
+	*stack = node2;
 	free(node1);
 }
 
 /**
  * sub - Subtracts the value of the first top node from the second one
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void sub(stack_t **head, int line_number)
+void sub(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	stack_t *node1;
 	stack_t *node2;
 	int count;
 
-	ptr = *head;
+	ptr = *stack;
 	count = 0;
 
 	while (ptr != NULL)
@@ -153,30 +153,30 @@ void sub(stack_t **head, int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	node1 = *head;
+	node1 = *stack;
 	node2 = node1->next;
 	node2->n = node2->n - node1->n;
 	node2->prev = NULL;
-	*head = node2;
+	*stack = node2;
 	free(node1);
 }
 
 /**
  * _div - Divides the second top value by the top value of the stack
- * @head: The address of the pointer to the first node
+ * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void _div(stack_t **head, int line_number)
+void _div(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	stack_t *node1;
 	stack_t *node2;
 	int count;
 
-	ptr = *head;
+	ptr = *stack;
 	count = 0;
 
 	while (ptr != NULL)
@@ -191,7 +191,7 @@ void _div(stack_t **head, int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-	node1 = *head;
+	node1 = *stack;
 	node2 = node1->next;
 	if (node2->n == 0)
 	{
@@ -201,6 +201,6 @@ void _div(stack_t **head, int line_number)
 
 	node2->n = node2->n / node1->n;
 	node2->prev = NULL;
-	*head = node2;
+	*stack = node2;
 	free(node1);
 }
