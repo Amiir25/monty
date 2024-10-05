@@ -79,7 +79,7 @@ void read_file(FILE *file)
  * @stack: The address of the pointer to the first node
  * @opcode: The opcode read by strtok() function
  * @line_number: The line number in the file
- * @arg: Thea argument of the opcode
+ * @arg: The argument of the opcode
  *
  * Return: Nothing
  */
@@ -90,7 +90,9 @@ void process_opcode(stack_t **stack, char *opcode,
 	int i;
 
 	instruction_t opcode_list[] = {
-		{"push", push}, {"pall", pall}, {"pint", pint}, {NULL, NULL}
+		{"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
+		{"add", add}, {"sub", sub}, {"div", div}, {"mul", mul}, {"mod", mod},
+		{"pchar", pchar}, {"pstr", pstr}, {"rot1", rot1}, {"rotr", rotr}, {NULL, NULL}
 	};
 
 	if (strcmp(opcode, "push") == 0)
