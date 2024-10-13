@@ -53,6 +53,8 @@ void pstr(stack_t **stack, unsigned int line_number)
 		printf("%c", (char)ptr->n);
 		ptr = ptr->next;
 	}
+
+	printf("\n");
 }
 
 /**
