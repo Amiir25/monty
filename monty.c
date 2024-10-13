@@ -92,7 +92,7 @@ void process_opcode(stack_t **stack, char *opcode,
 	instruction_t opcode_list[] = {
 		{"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
 		{"add", add}, {"nop", nop}, {"sub", sub}, {"div", _div}, {"mul", mul},
-		{"mod", mod}, {"pchar", pchar}, {"pstr", pstr},
+		{"mod", mod}, {"#", comment}, {"pchar", pchar}, {"pstr", pstr},
 		{"rot1", rot1}, {"rotr", rotr}, {NULL, NULL}
 	};
 
