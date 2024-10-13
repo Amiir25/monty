@@ -11,11 +11,12 @@ void free_stack(stack_t **stack)
 {
 	stack_t *ptr;
 
+	ptr = *stack;
 	while (ptr != NULL)
 	{
-		ptr = *stack;
 		*stack = (*stack)->next;
 		free(ptr);
+		ptr = *stack;
 	}
 }
 
