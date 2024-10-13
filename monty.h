@@ -58,10 +58,11 @@ void sub(stack_t **, unsigned int);
 void _div(stack_t **, unsigned int);
 void mul(stack_t **, unsigned int);
 void mod(stack_t **, unsigned int);
-void pchar(stack_t **, unsigned int);
-void pstr(stack_t **, unsigned int);
+void comment(stack_t **, unsigned int);
 
 /* Functions of operation_4.c */
+void pchar(stack_t **, unsigned int);
+void pstr(stack_t **, unsigned int);
 void rot1(stack_t **, unsigned int);
 void rotr(stack_t **, unsigned int);
 
