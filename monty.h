@@ -51,17 +51,18 @@ void free_stack(stack_t **);
 void pop(stack_t **, unsigned int);
 void swap(stack_t **, unsigned int);
 void add(stack_t **, unsigned int);
+void nop(stack_t **, unsigned int);
 void sub(stack_t **, unsigned int);
-void _div(stack_t **, unsigned int);
 
 /* Functions of operation-3.c */
+void _div(stack_t **, unsigned int);
 void mul(stack_t **, unsigned int);
 void mod(stack_t **, unsigned int);
 void pchar(stack_t **, unsigned int);
 void pstr(stack_t **, unsigned int);
-void rot1(stack_t **, unsigned int);
 
 /* Functions of operation_4.c */
+void rot1(stack_t **, unsigned int);
 void rotr(stack_t **, unsigned int);
 
 #endif /* MONTY_H */
