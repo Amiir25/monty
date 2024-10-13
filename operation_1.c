@@ -94,11 +94,7 @@ void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 
-	if (*stack == NULL)
-	{
-		fprintf(stderr, "L%d: Usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+	(void)line_number;
 
 	ptr = *stack;
 	while (ptr != NULL)
