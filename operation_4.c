@@ -43,12 +43,10 @@ void pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
 	char to_char;
+	(void)line_number;
 
 	if (*stack == NULL)
-	{
-		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+		printf("\n");
 
 	ptr = *stack;
 	while (ptr)
@@ -60,8 +58,6 @@ void pstr(stack_t **stack, unsigned int line_number)
 		ptr = ptr->next;
 		printf("%c", to_char);
 	}
-
-	printf("\n");
 }
 
 /**
