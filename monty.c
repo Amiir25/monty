@@ -93,7 +93,7 @@ void process_opcode(stack_t **stack, char *opcode,
 		{"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
 		{"add", add}, {"nop", nop}, {"sub", sub}, {"div", _div}, {"mul", mul},
 		{"mod", mod}, {"#", comment}, {"pchar", pchar}, {"pstr", pstr},
-		{"rot1", rot1}, {"rotr", rotr}, {NULL, NULL}
+		{"rotl", rotl}, {"rotr", rotr}, {NULL, NULL}
 	};
 
 	if (strcmp(opcode, "push") == 0)
