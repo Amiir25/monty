@@ -42,31 +42,19 @@ void _div(stack_t **stack, unsigned int line_number)
 
 void mul(stack_t **stack, unsigned int line_number)
 {
-	stack_t *ptr;
-	stack_t *node1;
-	stack_t *node2;
-	int count;
+	stack_t *top;
 
-	ptr = *stack;
-	count = 0;
-	while (ptr != NULL)
-	{
-		count++;
-		ptr = ptr->next;
-	}
-
-	if (count < 2)
+	if (*stack == NULL || (*stack)->next == NULL)
 	{
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
-	node1 = *stack;
-	node2 = node1->next;
-	node2->n = node1->n * node2->n;
-	node2->prev = NULL;
-	*stack = node2;
-	free(node1);
+	top = *stack;
+	top->next->n *= top->n;
+	*stack = top->next;
+	(*stack)->prev = NULL;
+	free(top);
 }
 
 /**
