@@ -42,21 +42,16 @@ void pchar(stack_t **stack, unsigned int line_number)
 void pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *ptr;
-	char to_char;
 	(void)line_number;
-
-	if (*stack == NULL)
-		printf("\n");
 
 	ptr = *stack;
 	while (ptr)
 	{
-		if (ptr->n < 33 || ptr->n > 126)
+		if (ptr->n <= 0 || ptr->n > 126)
 			break;
 
-		to_char = (char)ptr->n;
+		printf("%c", (char)ptr->n);
 		ptr = ptr->next;
-		printf("%c", to_char);
 	}
 }
 
