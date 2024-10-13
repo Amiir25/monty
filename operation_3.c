@@ -2,6 +2,50 @@
 
 
 /**
+ * _div - Divides the second top value by the top value of the stack
+ * @stack: The address of the pointer to the first node
+ * @line_number: The line number in the file
+ *
+ * Return: Nothing
+ */
+
+void _div(stack_t **stack, unsigned int line_number)
+{
+	stack_t *ptr;
+	stack_t *node1;
+	stack_t *node2;
+	int count;
+
+	ptr = *stack;
+	count = 0;
+
+	while (ptr != NULL)
+	{
+		count++;
+		ptr = ptr->next;
+	}
+
+	if (count < 2)
+	{
+		fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	node1 = *stack;
+	node2 = node1->next;
+	if (node2->n == 0)
+	{
+		fprintf(stderr, "L%d: division by zero\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	node2->n = node2->n / node1->n;
+	node2->prev = NULL;
+	*stack = node2;
+	free(node1);
+}
+
+/**
  * mul - Multiplies the second top value by the top value of the stack
  * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
@@ -144,38 +188,4 @@ void pstr(stack_t **stack, unsigned int line_number)
 	}
 
 	printf("\n");
-}
-
-/**
- * rot1 - Prints the a string from its ascii equivalent
- * @stack: The address of the pointer to the first node
- * @line_number: The line number in the file
- *
- * Return: Nothing
- */
-
-void rot1(stack_t **stack, unsigned int line_number)
-{
-	stack_t *ptr;
-	stack_t *last;
-
-	if (*stack == NULL)
-	{
-		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-
-	ptr = *stack;
-	while (ptr)
-	{
-		last = ptr;
-		ptr = ptr->next;
-	}
-
-	last->next = *stack;
-	(*stack)->prev = last;
-	*stack = (*stack)->next;
-
-	(*stack)->prev = NULL;
-	last->next->next = NULL;
 }
