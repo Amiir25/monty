@@ -60,6 +60,8 @@ void pstr(stack_t **stack, unsigned int line_number)
 		ptr = ptr->next;
 		printf("%c", to_char);
 	}
+
+	printf("\n");
 }
 
 /**
