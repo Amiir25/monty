@@ -63,7 +63,7 @@ void comment(stack_t **, unsigned int);
 /* Functions of operation_4.c */
 void pchar(stack_t **, unsigned int);
 void pstr(stack_t **, unsigned int);
-void rot1(stack_t **, unsigned int);
+void rotl(stack_t **, unsigned int);
 void rotr(stack_t **, unsigned int);
 
 #endif /* MONTY_H */
