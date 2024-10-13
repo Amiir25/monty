@@ -45,7 +45,6 @@ void read_file(FILE *file)
 	size_t len;
 	char *opcode;
 	char *arg;
-	char *saveptr;
 	unsigned int line_number;
 
 	stack = NULL;
@@ -58,11 +57,11 @@ void read_file(FILE *file)
 
 		line_number++;
 
-		opcode = strtok_r(line, " \n\t\r", &saveptr);
+		opcode = strtok(line, " \n\t\r");
 		if (opcode == NULL || opcode[0] == '#')
 			continue;
 
-		arg = strtok_r(NULL, " \n\t\r", &saveptr);
+		arg = strtok(NULL, " \n\t\r");
 		process_opcode(&stack, opcode, line_number, arg);
 	}
 
