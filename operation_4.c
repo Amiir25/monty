@@ -100,26 +100,24 @@ void rotl(stack_t **stack, unsigned int line_number)
 
 void rotr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *ptr;
+	stack_t *first;
 	stack_t *last;
 
-	if (*stack == NULL)
-	{
-		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+	(void)line_number;
 
-	ptr = *stack;
-	while (ptr)
-	{
-		last = ptr;
-		ptr = ptr->next;
-	}
+	if (*stack == NULL || (*stack)->next == NULL)
+		return;
 
-	last->next = *stack;
-	last->prev->next = NULL;
-	last->prev = NULL;
+	first = *stack;
+	last = *stack;
 
-	(*stack)->prev = last;
+	while (last->next != NULL)
+		last = last->next;
+
 	*stack = last;
+	(*stack)->next = first;
+	(*stack)->prev = NULL;
+
+	first->prev = *stack;
+	last->prev->next = NULL;
 }
