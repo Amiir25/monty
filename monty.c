@@ -14,14 +14,14 @@ int main(int ac, char *av[])
 
 	if (ac != 2)	/* Check if the file name is found in the arguement */
 	{
-		printf("Usage: monty file\n");
+		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 
 	file = fopen(av[1], "r");	/* Open the file to read */
 	if (file == NULL)
 	{
-		printf("Error: can't open file %s\n", av[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", av[1]);
 		exit(EXIT_FAILURE);
 	}
 
