@@ -58,37 +58,31 @@ void pstr(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * rot1 - Prints the a string from its ascii equivalent
+ * rotl - Rotates the stack to the top
  * @stack: The address of the pointer to the first node
  * @line_number: The line number in the file
  *
  * Return: Nothing
  */
 
-void rot1(stack_t **stack, unsigned int line_number)
+void rotl(stack_t **stack, unsigned int line_number)
 {
-	stack_t *ptr;
+	stack_t *first;
 	stack_t *last;
+	(void)line_number;
 
-	if (*stack == NULL)
-	{
-		fprintf(stderr, "L%d: can't pstr, stack empty\n", line_number);
-		exit(EXIT_FAILURE);
-	}
+	first = *stack;
+	last = *stack;
+	while (last != NULL)
+		last = last->next;
 
-	ptr = *stack;
-	while (ptr)
-	{
-		last = ptr;
-		ptr = ptr->next;
-	}
-
-	last->next = *stack;
-	(*stack)->prev = last;
-	*stack = (*stack)->next;
-
+	last->next = first;
+	first->prev = last;
+	*stack = first->next;
+	first->next = NULL;
 	(*stack)->prev = NULL;
-	last->next->next = NULL;
+	free(first);
+	free(last);
 }
 
 /**
