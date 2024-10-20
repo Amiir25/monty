@@ -80,13 +80,14 @@ void push(stack_t **stack, unsigned int line_number, char *arg)
 	new_node->n = atoi(arg);
 	new_node->prev = NULL;
 	new_node->next = NULL;
-	if (current_mode == 0)
+	if (current_mode == 0)	/* Stack mode */
 	{
+		new_node->next = *stack;
 		if (*stack != NULL)
 			(*stack)->prev = new_node;
 		*stack = new_node;
 	}
-	else
+	else	/* Queue mode */
 	{
 		if (*stack == NULL)
 			*stack = new_node;
