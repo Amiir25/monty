@@ -44,21 +44,21 @@ void read_file(FILE *);
 void process_opcode(stack_t **, char *, unsigned int, char *);
 
 /* Functions of operation-1.c */
+void free_stack(stack_t **);
+int is_number(char *);
 void push(stack_t **, unsigned int, char *);
 void push_stack_queue(stack_t **, stack_t **);
 void pall(stack_t **, unsigned int);
-void pint(stack_t **, unsigned int);
-int is_number(char *);
-void free_stack(stack_t **);
 
 /* Functions of operation-2.c */
+void pint(stack_t **, unsigned int);
 void pop(stack_t **, unsigned int);
 void swap(stack_t **, unsigned int);
 void add(stack_t **, unsigned int);
 void nop(stack_t **, unsigned int);
-void sub(stack_t **, unsigned int);
 
 /* Functions of operation-3.c */
+void sub(stack_t **, unsigned int);
 void _div(stack_t **, unsigned int);
 void mul(stack_t **, unsigned int);
 void mod(stack_t **, unsigned int);
