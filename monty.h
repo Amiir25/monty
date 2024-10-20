@@ -36,6 +36,9 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/* A global variable to control the format of the data (stack vs queue)
+extern int current_mode;
+
 /* Function of monty.c */
 void read_file(FILE *);
 void process_opcode(stack_t **, char *, unsigned int, char *);
