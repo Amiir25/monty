@@ -1,6 +1,6 @@
 #include "monty.h"
 
-/* Global variable definition, 0 (default) for stack & 1 for queue
+/* Global variable definition, 0 (default) for stack & 1 for queue */
 int current_mode = 0;
 
 /**
