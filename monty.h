@@ -46,7 +46,7 @@ void process_opcode(stack_t **, char *, unsigned int, char *);
 /* Functions of operation-1.c */
 void free_stack(stack_t **);
 int is_number(char *);
-void push(stack_t **, unsigned int, char *);
+void pre_push(stack_t **, unsigned int, char *);
 void push_stack_queue(stack_t **, stack_t **);
 void pall(stack_t **, unsigned int);
 
