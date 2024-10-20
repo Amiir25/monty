@@ -1,5 +1,8 @@
 #include "monty.h"
 
+/* Global variable definition, 0 (default) for stack & 1 for queue
+int current_mode = 0;
+
 /**
  * main - Entry
  * @ac: The number of arguments
@@ -93,7 +96,8 @@ void process_opcode(stack_t **stack, char *opcode,
 		{"pall", pall}, {"pint", pint}, {"pop", pop}, {"swap", swap},
 		{"add", add}, {"nop", nop}, {"sub", sub}, {"div", _div}, {"mul", mul},
 		{"mod", mod}, {"#", comment}, {"pchar", pchar}, {"pstr", pstr},
-		{"rotl", rotl}, {"rotr", rotr}, {NULL, NULL}
+		{"rotl", rotl}, {"rotr", rotr}, {"stack", stack_mode}, {"queue", queue_mode},
+		{NULL, NULL}
 	};
 
 	if (strcmp(opcode, "push") == 0)
