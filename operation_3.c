@@ -1,5 +1,30 @@
 #include "monty.h"
 
+/**
+ * sub - Subtracts the value of the first top node from the second one
+ * @stack: The address of the pointer to the first node
+ * @line_number: The line number in the file
+ *
+ * Return: Nothing
+ */
+
+void sub(stack_t **stack, unsigned int line_number)
+{
+	stack_t *top;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
+	top = *stack;
+	top->next->n -= top->n;
+
+	*stack = top->next;
+	(*stack)->prev = NULL;
+	free(top);
+}
 
 /**
  * _div - Divides the second top value by the top value of the stack
