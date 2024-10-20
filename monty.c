@@ -102,7 +102,7 @@ void process_opcode(stack_t **stack, char *opcode,
 
 	if (strcmp(opcode, "push") == 0)
 	{
-		push(stack, line_number, arg);
+		pre_push(stack, line_number, arg);
 		return;
 	}
 
