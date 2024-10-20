@@ -50,7 +50,7 @@ int is_number(char *str)
 }
 
 /**
- * push - Creates a pointer to a new node
+ * pre_push - Creates a pointer to a new node
  * @stack: The address of the pointer to the first node
  * @line_number: The line number of an error in the file if occur
  * @arg: The argument of push
@@ -58,7 +58,7 @@ int is_number(char *str)
  * Return: Nothing
  */
 
-void push(stack_t **stack, unsigned int line_number, char *arg)
+void pre_push(stack_t **stack, unsigned int line_number, char *arg)
 {
 	stack_t *new_node;
 
