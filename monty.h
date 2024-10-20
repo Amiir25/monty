@@ -36,7 +36,7 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/* A global variable to control the format of the data (stack vs queue)
+/* A global variable to control the format of the data (stack vs queue) */
 extern int current_mode;
 
 /* Function of monty.c */
@@ -68,5 +68,9 @@ void pchar(stack_t **, unsigned int);
 void pstr(stack_t **, unsigned int);
 void rotl(stack_t **, unsigned int);
 void rotr(stack_t **, unsigned int);
+
+/* Functions of operation_5.c */
+void stack_mode(stack_t **, unsigned int);
+void queue_mode(stack_t **, unsigned int);
 
 #endif /* MONTY_H */
