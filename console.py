@@ -1,113 +1,126 @@
-def do_all(self, arg):
-    """
-    Prints all string representations of all instances and
-    optionally filters by class name.
-    """
-    if not arg:
-        print([str(obj) for obj in storage.all().values()])
-        return
+import unittest
+from unittest.mock import patch
+from io import StringIO
+from console import HBNBCommand
+from models import storage
+from models.user import User
+from models.base_model import BaseModel
 
-    cls = globals().get(arg)
-    if cls and issubclass(cls, BaseModel):
-        instances = [
-            str(obj) for key, obj in storage.all().items()
-            if key.startswith(arg + '.')
-        ]
-        print(instances)
-    else:
-        print("** class doesn't exist **")
-Update default Method to Support New update Commands
-Modify the default method to handle both the update commands:
 
-<class name>.update(<id>, <attribute name>, <attribute value>)
-<class name>.update(<id>, <dictionary representation>).
-Here’s the updated default method:
+class TestHBNBCommand(unittest.TestCase):
+    """Test class for the HBNBCommand console."""
 
-def default(self, line):
-    """Handles commands in the <ClassName>.<command>() format"""
+    def setUp(self):
+        """Set up test cases and reset storage."""
+        storage.reset()  # Assuming a reset method exists in your storage to clear objects.
 
-    if '.' not in line:
-        print("Command not found: {}".format(line))
-        return
+    def test_quit(self):
+        """Test `quit` command exits the console."""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertTrue(HBNBCommand().onecmd("quit"))
 
-    cls_name, mtd_call = line.split('.', 1)
-    mtd_name, _, args = mtd_call.partition('(')
-    args = args.rstrip(')').strip()
+    def test_EOF(self):
+        """Test EOF exits the console."""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertTrue(HBNBCommand().onecmd("EOF"))
+            self.assertEqual(output.getvalue(), "\n")
 
-    cls = globals().get(cls_name)
-    if not cls or not issubclass(cls, BaseModel):
-        print("** class doesn't exist **")
-        return
+    def test_emptyline(self):
+        """Test empty line does nothing."""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(""))
+            self.assertEqual(output.getvalue(), "")
 
-    cmd_map = {
-        "all": "do_all",
-        "count": "do_count",
-        "show": "do_show",
-        "destroy": "do_destroy",
-        "update": "do_update",
-        "create": "do_create"
-    }
+    def test_create(self):
+        """Test `create` command for new object creation."""
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd("create User")
+            obj_id = output.getvalue().strip()
+            self.assertIn(f"User.{obj_id}", storage.all())
 
-    if mtd_name in cmd_map:
-        if args:
-            full_args = f"{cls_name} {args}"
-        else:
-            full_args = cls_name
+    def test_create_invalid_class(self):
+        """Test `create` with an invalid class name."""
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd("create InvalidClass")
+            self.assertEqual(output.getvalue().strip(), "** class doesn't exist **")
 
-        getattr(self, cmd_map[mtd_name])(full_args)
+    def test_show(self):
+        """Test `show` command to display an object."""
+        user = User()
+        user.save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd(f"show User {user.id}")
+            self.assertIn(str(user), output.getvalue().strip())
 
-    elif mtd_name == "update":
-        self.handle_update(cls_name, args)
+    def test_show_invalid_class(self):
+        """Test `show` command with invalid class."""
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd("show InvalidClass 1234")
+            self.assertEqual(output.getvalue().strip(), "** class doesn't exist **")
 
-    else:
-        print("Invalid command: {}".format(mtd_name))
+    def test_show_invalid_id(self):
+        """Test `show` command with invalid ID."""
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd("show User 1234")
+            self.assertEqual(output.getvalue().strip(), "** no instance found **")
 
-def handle_update(self, cls_name, args):
-    """
-    Handles the `update` command with different formats:
-    - <class name>.update(<id>, <attribute name>, <attribute value>)
-    - <class name>.update(<id>, <dictionary>)
-    """
-    import json
+    def test_destroy(self):
+        """Test `destroy` command."""
+        user = User()
+        user.save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd(f"destroy User {user.id}")
+            self.assertNotIn(f"User.{user.id}", storage.all())
 
-    args_list = args.split(', ', 1)
+    def test_all(self):
+        """Test `all` command for listing all objects."""
+        user = User()
+        user.save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd("all")
+            self.assertIn(str(user), output.getvalue().strip())
 
-    if len(args_list) < 1:
-        print("** instance id missing **")
-        return
+    def test_all_class_filter(self):
+        """Test `all` command with a specific class."""
+        user = User()
+        user.save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd("all User")
+            self.assertIn(str(user), output.getvalue().strip())
 
-    obj_id = args_list[0].strip('"')
+    def test_count(self):
+        """Test `count` command to count objects of a class."""
+        User()
+        User().save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd("User.count()")
+            self.assertEqual(output.getvalue().strip(), "2")
 
-    if len(args_list) == 1:
-        print("** attribute name missing **")
-        return
+    def test_update(self):
+        """Test `update` command with individual attribute."""
+        user = User()
+        user.save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd(f'update User {user.id} name "Test"')
+            self.assertEqual(user.name, "Test")
 
-    obj_key = f"{cls_name}.{obj_id}"
-    obj = storage.all().get(obj_key)
+    def test_update_dict(self):
+        """Test `update` command with dictionary."""
+        user = User()
+        user.save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd(f'update User {user.id} {{"name": "Test", "age": 30}}')
+            self.assertEqual(user.name, "Test")
+            self.assertEqual(user.age, 30)
 
-    if not obj:
-        print("** no instance found **")
-        return
+    def test_invalid_update(self):
+        """Test `update` with invalid attribute."""
+        user = User()
+        user.save()
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd(f"update User {user.id}")
+            self.assertEqual(output.getvalue().strip(), "** attribute name missing **")
 
-    if args_list[1].startswith('{') and args_list[1].endswith('}'):
-        # Update with dictionary
-        try:
-            attr_dict = json.loads(args_list[1].replace("'", '"'))
-            for key, value in attr_dict.items():
-                setattr(obj, key, value)
-            obj.save()
-        except json.JSONDecodeError:
-            print("** invalid dictionary format **")
-    else:
-        # Update with <attribute name>, <attribute value>
-        attr_name, attr_value = args_list[1].split(', ', 1)
-        attr_name = attr_name.strip('"')
-        attr_value = attr_value.strip('"')
 
-        # Type conversion if necessary
-        if hasattr(obj, attr_name):
-            attr_type = type(getattr(obj, attr_name))
-            attr_value = attr_type(attr_value)
-
-        setattr(obj, attr_name, attr_value)
-        obj.save()
+if __name__ == "__main__":
+    unittest.main()
