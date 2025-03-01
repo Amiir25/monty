@@ -5,7 +5,7 @@ int current_mode = 0;
 
 /**
  * main - Entry
- * @ac: The number of arguments
+ * @ac: Number of arguments
  * @av: Array of arguments
  *
  * Return: Always success
